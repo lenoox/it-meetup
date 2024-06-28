@@ -1,0 +1,17 @@
+{
+  "name": "it-meetup-api-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": ["it-meetup-api"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
+      "options": {
+        "jestConfig": "apps/it-meetup-api-e2e/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "dependsOn": ["it-meetup-api:build"]
+    }
+  }
+}
