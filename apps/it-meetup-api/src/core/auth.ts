@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import { Response } from 'express';
 import { getToken } from '../utils/authUtils';
+
 dotenv.config();
 const privateKey: string | undefined = process.env.JWT_SECRET;
 export const comparePasswords = (password: string, hash: string) => {

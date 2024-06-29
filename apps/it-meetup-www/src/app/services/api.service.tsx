@@ -2,7 +2,7 @@ import { filteredParamsIfNotNull } from '../utils/utils';
 import axios, { AxiosResponse } from 'axios';
 import { localStorageService } from './storage.service';
 import { goToPage } from './navigate.service';
-import { redirectDocument } from 'react-router-dom';
+
 const axiosApi = axios.create();
 const getApiUrl = () => {
   return import.meta.env.VITE_API_URL;
