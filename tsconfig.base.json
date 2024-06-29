@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@it-meetup/dto": ["libs/dto/src/index.ts"],
       "@it-meetup/ui": ["libs/ui/src/index.ts"]
     }
   },
