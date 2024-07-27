@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
 import { EventFacade } from '../../store/event/event.facade';
+import { ListWithPagination } from '@it-meetup/ui';
 
 export function Home() {
   const { events, fetchEvents } = EventFacade();
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  // useEffect(() => {
+  //   fetchEvents();
+  // }, []);
   return (
     <div>
-      {events?.map((event) => (
-        <li key={event._id}>{event.title}</li>
-      ))}
+      <ListWithPagination />
     </div>
   );
 }
