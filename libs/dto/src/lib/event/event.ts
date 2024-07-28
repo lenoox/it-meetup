@@ -3,31 +3,31 @@ export interface EventModel {
   title: string;
   organisation: string;
   description: string;
-  date: string;
+  date: Date;
+  category: string;
   user: string;
   createdAt: string;
   updatedAt: string;
+  __v: unknown;
 }
 export interface EventByDate {
   date: string;
-  values: EventDto[];
+  values: EventResponse[];
 }
 
-export interface EventsDto {
-  _id: number;
+export interface EventsResponse {
   date: string;
-  data: EventDto[];
+  data: EventResponse[];
 }
 
-export interface EventDto {
-  _id: string;
+export interface EventResponse {
+  id: string;
   title: string;
   organisation: string;
   description: string;
   category: string;
-  date: string;
+  date: Date;
   user: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }

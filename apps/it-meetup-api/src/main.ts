@@ -13,7 +13,11 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT;
 connectDB();
-const whitelist = ['http://localhost:80', 'http://localhost:4200'];
+const whitelist = [
+  'http://localhost:80',
+  'http://localhost:4200',
+  'http://localhost:4201',
+];
 const corsOptions = {
   origin: (origin: any, callback: any) => {
     if (whitelist.indexOf(origin) !== -1) {

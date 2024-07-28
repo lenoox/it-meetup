@@ -3,7 +3,7 @@ import { User } from '../model/user';
 import { Event } from '../model/event';
 import { eventsGroupByDate } from '../utils/eventsGroupByDate';
 import { mapEventToEventDto } from '../mappers/eventsMappers';
-import { EventByDate, EventDto } from '@it-meetup/dto';
+import { EventResponse, EventsResponse } from '@it-meetup/dto';
 
 export const createEvent = async (req: any, res: Response) => {
   try {
@@ -36,11 +36,12 @@ export const createEvent = async (req: any, res: Response) => {
 
 export const getEvent = async (req: Request, res: Response) => {
   try {
-    const events: any = await Event.find();
-    const eventDto: EventDto[] = events.map((event) =>
+    const events: any = await Event.find().sort({ date: 'asc' });
+    const eventDto: EventResponse[] = events.map((event) =>
       mapEventToEventDto(event)
     );
-    const eventsGroupByDateFormat: EventByDate[] = eventsGroupByDate(eventDto);
+    const eventsGroupByDateFormat: EventsResponse[] =
+      eventsGroupByDate(eventDto);
     res.status(200).json(eventsGroupByDateFormat);
   } catch (error: any) {
     res.status(401).json({ success: false, error: error.message });
