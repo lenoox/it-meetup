@@ -18,6 +18,7 @@ export interface EventByDate {
 export interface EventsResponse {
   date: string;
   data: EventResponse[];
+  rowIndex?: number;
 }
 
 export interface EventResponse {

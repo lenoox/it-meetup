@@ -1,8 +1,13 @@
 import { Table, TableColumnsType } from 'antd';
 import { DateTime } from 'luxon';
+import { map } from 'lodash';
 import { EventResponse, EventsResponse } from '@it-meetup/dto';
 
-export const ListWithPagination = ({ data }) => {
+interface ListWithPaginationType {
+  data: any;
+}
+export const ListWithPagination = (params: ListWithPaginationType) => {
+  const dataSource = params.data;
   const firstExpandedRowColumns: TableColumnsType<EventResponse> = [
     {
       title: 'Title',
@@ -53,9 +58,12 @@ export const ListWithPagination = ({ data }) => {
 
   return (
     <div className="container mx-auto p-4">
-      {data.length > 0 ? (
+      {dataSource.length > 0 ? (
         <Table
-          dataSource={data}
+          dataSource={map(dataSource, (data: any, rowIndex: number) => ({
+            ...data,
+            rowIndex,
+          }))}
           rowKey={(record) => record.rowIndex}
           expandable={{
             expandedRowRender: useFirstExpandedRow,
@@ -64,7 +72,7 @@ export const ListWithPagination = ({ data }) => {
           columns={mainColumns}
           pagination={{
             position: ['bottomRight'],
-            total: data.length,
+            total: dataSource.length,
             defaultPageSize: 2,
           }}
         />

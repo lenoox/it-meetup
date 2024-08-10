@@ -1,29 +1,33 @@
 import { Button, Form, Input, Modal } from 'antd';
-import { useForm } from 'react-hook-form';
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import Password from 'antd/lib/input/Password';
 import { FormController } from '@it-meetup/ui';
 import { z, ZodType } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../store/auth/auth.facade';
 
 export type FormData = {
   email: string;
   password: string;
 };
 
-export const UserSchema: ZodType<FormData> = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: 'Password is too short' })
-    .max(20, { message: 'Password is too long' }),
-});
 export function Login() {
+  const { i18n, t } = useTranslation();
+  const { loginUser } = useAuth();
+
+  const UserSchema: ZodType<FormData> = z.object({
+    email: z.string().email(),
+    password: z.string().min(8, { message: t('app.login.password_min_error') }),
+  });
+
   const [modal, contextHolder] = Modal.useModal();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       email: '',
@@ -31,27 +35,29 @@ export function Login() {
     },
   });
 
-  const submitForm = (e) => {
-    console.log(e);
+  const submitForm: SubmitHandler<FormData> = (form) => {
+    loginUser(form);
   };
-  const onInvalidSubmit = (e) => {
+  const onInvalidSubmit: SubmitErrorHandler<FormData> = (e) => {
     const config = {
-      title: 'Niepoprawne dane',
+      title: t('common.incorrect_form'),
       content: (
         <>
-          <p>{e.email ? 'Podano niepoprawny email' : null}</p>
-          <p>{e.password ? 'Hasło powinno mieć minimu 8 znaków' : null}</p>
+          <p>{e.email ? t('app.login.email_incorrect_error') : null}</p>
+          <p>{e.password ? t('app.login.password_min_error') : null}</p>
         </>
       ),
     };
-    modal.error(config);
+    modal.warning(config);
   };
 
   return (
     <div className={'w-full h-2/3 flex justify-center items-center'}>
       <div className={'w-96'}>
         <Form layout="vertical">
-          <h1 className={'text-2xl font-bold text-center'}>Logowanie</h1>
+          <h1 className={'text-2xl font-bold text-center'}>
+            {t('app.login.heading')}
+          </h1>
           <FormController name="email" label="email" control={control}>
             <Input />
           </FormController>
@@ -59,7 +65,7 @@ export function Login() {
             <Password />
           </FormController>
           <Button onClick={handleSubmit(submitForm, onInvalidSubmit)}>
-            Submit
+            {t('app.login.login_button')}
           </Button>
         </Form>
         {contextHolder}
