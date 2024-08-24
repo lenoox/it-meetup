@@ -5,9 +5,9 @@ import { eventsGroupByDate } from '../utils/eventsGroupByDate';
 import { mapEventToEventDto } from '../mappers/eventsMappers';
 import { EventResponse, EventsResponse } from '@it-meetup/dto';
 
-export const createEvent = async (req: any, res: Response) => {
+export const createEventService = async (req: any, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.id.toString();
     const { title, organisation, description, dateTime } = req.body;
     const user = await User.findById(userId);
     if (!user) {

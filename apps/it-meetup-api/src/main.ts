@@ -10,6 +10,7 @@ import { protect } from './core/auth';
 import connectDB from './config/db';
 
 const app = express();
+app.disable('x-powered-by');
 dotenv.config();
 const port = process.env.PORT;
 connectDB();

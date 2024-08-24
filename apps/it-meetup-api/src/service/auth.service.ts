@@ -4,7 +4,7 @@ import { comparePasswords, createJWT, hashPassword } from '../core/auth';
 import { userToDto } from '../mappers/userMappers';
 import { User } from '../model/user';
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUserService = async (req: Request, res: Response) => {
   const { name, email, phone, password } = req.body;
   try {
     if (!name || !email || !phone || !password) {
@@ -28,9 +28,10 @@ export const createUser = async (req: Request, res: Response) => {
     res.status(401).json({ success: false, error: error.message });
   }
 };
-export const signin = async (req: Request, res: Response) => {
+export const signinService = async (req: Request, res: Response) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const query = { email: req?.body?.email?.toString() };
+    const user = await User.findOne(query);
     if (!user) {
       res.json({ message: 'Error' });
       return;

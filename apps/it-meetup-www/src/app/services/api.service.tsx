@@ -34,8 +34,8 @@ const axiosInterceptor = () => {
       }
       return config;
     },
-    (error) => {
-      return Promise.reject(error);
+    () => {
+      return Promise.reject(new Error('Something went wrong'));
     }
   );
   return axiosApi;

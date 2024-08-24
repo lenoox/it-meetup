@@ -26,15 +26,11 @@ export const UserSchema: ZodType<FormData> = z
   });
 export function Register() {
   const { registerUser } = useAuth();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
 
   const [modal, contextHolder] = Modal.useModal();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       name: '',

@@ -13,7 +13,7 @@ export type FormData = {
 };
 
 export function Login() {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const { loginUser } = useAuth();
 
   const UserSchema: ZodType<FormData> = z.object({
@@ -23,11 +23,7 @@ export function Login() {
 
   const [modal, contextHolder] = Modal.useModal();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       email: '',
