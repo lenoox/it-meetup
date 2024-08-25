@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './app/app';
 import { store } from './app/store/store';
 import { Provider } from 'react-redux';
+import './app/core/translation/i18n';
 
 export const router = createBrowserRouter([{ path: '*', element: <App /> }]);
 

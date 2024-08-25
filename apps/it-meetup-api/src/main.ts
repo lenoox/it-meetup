@@ -10,10 +10,15 @@ import { protect } from './core/auth';
 import connectDB from './config/db';
 
 const app = express();
+app.disable('x-powered-by');
 dotenv.config();
 const port = process.env.PORT;
 connectDB();
-const whitelist = ['http://localhost:80', 'http://localhost:4200'];
+const whitelist = [
+  'http://localhost:80',
+  'http://localhost:4200',
+  'http://localhost:4201',
+];
 const corsOptions = {
   origin: (origin: any, callback: any) => {
     if (whitelist.indexOf(origin) !== -1) {

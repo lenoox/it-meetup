@@ -17,6 +17,12 @@ const get = async <T,>(pathRequest: string, paramsRequest?: unknown) => {
     });
   return response;
 };
+const post = async <T,>(pathRequest: string, data?: unknown) => {
+  const response: AxiosResponse<T> = await apiService
+    .axiosInterceptor()
+    .post<T>(`${apiService.getApiUrl()}${pathRequest}`, data);
+  return response;
+};
 const axiosInterceptor = () => {
   axiosApi.interceptors.request.use(
     (config) => {
@@ -28,8 +34,8 @@ const axiosInterceptor = () => {
       }
       return config;
     },
-    (error) => {
-      return Promise.reject(error);
+    () => {
+      return Promise.reject(new Error('Something went wrong'));
     }
   );
   return axiosApi;
@@ -38,6 +44,7 @@ const axiosInterceptor = () => {
 export const apiService = {
   getApiUrl,
   get,
+  post,
   axiosApi,
   axiosInterceptor,
 };
